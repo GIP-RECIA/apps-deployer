@@ -12,5 +12,6 @@ rootProject.name = 'gradle-war-deployer'
 
 include "overlays:esup-publisher"
 include "overlays:pronote-ws"
+include "overlays:GLC"
 include 'overlays:psi-probe'
 include 'overlays:wisemapping'

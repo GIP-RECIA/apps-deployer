@@ -1,0 +1,9 @@
+dependencies {
+    runtime "fr.recia.glc:esco-glc:${escoGLCVersion}@war"
+}
+
+war {
+    archiveName="glc.war"
+
+    classpath = classpath.files
+}
