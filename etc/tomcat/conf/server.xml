@@ -167,6 +167,9 @@
           <Context path="/pronote-ws" docBase="${server.webapps}/pronote-ws" reloadable="false" crossContext="true" >
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/pronote-ws/"/>
           </Context>
+          <Context path="/glc2" docBase="${server.webapps}/GLC" reloadable="false" crossContext="true" >
+               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/glc/"/>
+          </Context>
           <Context path="/wisemapping" docBase="${server.webapps}/wisemapping" reloadable="false" crossContext="true"/>
           <Context path="/manager" docBase="${server.home}/webapps/manager" reloadable="false" antiResourceLocking="false" privileged="true" useHttpOnly="true">
           </Context>
