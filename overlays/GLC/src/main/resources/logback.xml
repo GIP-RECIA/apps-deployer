@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true" scanPeriod="30 seconds">
-    <contextName>publisher</contextName>
+    <contextName>glc</contextName>
     <jmxConfigurator />
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -17,12 +17,12 @@
         </encoder>
     </appender>
 
-     <root level="${logback.loglevel:-WARN}">
-        <appender-ref ref="FILE"/>
+    <root level="${logback.loglevel:-WARN}">
+        <appender-ref ref="FILE" />
     </root>
 
 
-    <logger name="org.esupportail.publisher" level="WARN"/>
+    <logger name="fr.recia.glc" level="WARN" />
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
