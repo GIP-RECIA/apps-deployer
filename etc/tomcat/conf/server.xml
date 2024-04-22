@@ -171,6 +171,9 @@
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/glc/"/>
           </Context>
           <Context path="/wisemapping" docBase="${server.webapps}/wisemapping" reloadable="false" crossContext="true"/>
+          <Context path="/ressources-diffusables" docBase="${server.webapps}/ressources-diffusables" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/ressources-diffusables/"/>
+          </Context>
           <Context path="/manager" docBase="${server.home}/webapps/manager" reloadable="false" antiResourceLocking="false" privileged="true" useHttpOnly="true">
           </Context>
           <Context path="/probe" docBase="${server.webapps}/psi-probe" reloadable="false" antiResourceLocking="false" privileged="true" useHttpOnly="true" >
