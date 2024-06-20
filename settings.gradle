@@ -16,3 +16,4 @@ include "overlays:GLC"
 include 'overlays:psi-probe'
 include 'overlays:wisemapping'
 include 'overlays:collabsoft'
+include 'overlays:mediacentre-api'
