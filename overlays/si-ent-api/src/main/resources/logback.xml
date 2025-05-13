@@ -33,7 +33,7 @@
     <logger name="fr.recia" level="WARN"/>
     <logger name="org" level="WARN"/>
 
-    <logger name="fr.recia.si.ent.api.config.security.AuthenticationService" level="INFO" additivity="false">
+    <logger name="fr.recia.si.ent.api.security.AuthenticationService" level="INFO" additivity="false">
         <appender-ref ref="AUTH" />
     </logger>
 
