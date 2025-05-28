@@ -181,6 +181,9 @@
           <Context path="/mediacentre-api" docBase="${server.webapps}/mediacentre-api" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/mediacentre-api/"/>
           </Context>
+          <Context path="/ressources-diffusables" docBase="${server.webapps}/ressources-diffusables" reloadable="false" crossContext="true">
+               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/ressources-diffusables/"/>
+          </Context>
 
           <Context path="/cerbere2" docBase="${server.webapps}/cerbere2" reloadable="true"  crossContext="true" />
           <Context path="/MCE" docBase="${server.webapps}/moncompte" reloadable="true"  crossContext="true" />
