@@ -1,0 +1,8 @@
+dependencies {
+    runtime "fr.recia.api:esco-service-info-api:${serviceInfoAPIVersion}@war"
+}
+
+war {
+    archiveName = 'service-info-api.war'
+    classpath = classpath.files
+}
