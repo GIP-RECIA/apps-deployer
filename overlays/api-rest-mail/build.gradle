@@ -1,0 +1,8 @@
+dependencies {
+    runtime "fr.recia.widget.api:proxy-cas-app:${apiRestMailVersion}@war"
+}
+
+war {
+    archiveName = 'api-rest-mail.war'
+    classpath = classpath.files
+}
