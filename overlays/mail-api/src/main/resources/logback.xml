@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true" scanPeriod="30 seconds">
-    <contextName>api-rest-mail</contextName>
+    <contextName>mail-api</contextName>
     <jmxConfigurator/>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
