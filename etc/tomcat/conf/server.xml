@@ -193,6 +193,10 @@
           <Context path="/mail-api" docBase="${server.webapps}/mail-api" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/mail-api/"/>
           </Context>
+          <Context path="/sympa-api" docBase="${server.webapps}/sympa-api" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/sympa-api/"/>
+          </Context>
+
           <Context path="/cerbere2" docBase="${server.webapps}/cerbere2" reloadable="true"  crossContext="true" />
           <Context path="/MCE" docBase="${server.webapps}/moncompte" reloadable="true"  crossContext="true" />
 
