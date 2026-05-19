@@ -6,6 +6,10 @@ dependencies {
     compileOnly("org.springframework:spring-web:6.2.17@jar")
     compileOnly("org.springframework.boot:spring-boot-autoconfigure:3.5.12@jar")
     compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0@jar")
+    compileOnly("org.slf4j:slf4j-api:2.0.17@jar")
+    compileOnly("org.springframework:spring-core:6.2.17@jar")
+    compileOnly("org.springframework:spring-beans:6.2.17@jar")
+    compileOnly("jakarta.activation:jakarta.activation-api:2.1.1@jar")
 }
 
 war {
