@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:fragment="styles">
+        <link rel="stylesheet" th:href="@{/css/custom.css}" type="text/css">
+    </th:block>
+</head>
+
+<body>
+<div th:fragment="content">
+    <extended-uportal-header fname="Filemanager"  template-api-path="/commun/portal_template_api.tpl.json" >
+    </extended-uportal-header>
+    <script type="text/javascript" src="/resource-server/webjars/gip-recia__ui-webcomponents/dist/r-header.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Cache tous les enfants de :
+            // .navbar-text.ms-auto.me-2.small
+            document.querySelectorAll('.navbar-text.ms-auto.me-2.small > *')
+                .forEach(function(el) {
+                    el.remove();
+                });
+
+            // Supprime #toolbar-logout
+            const logout = document.getElementById('toolbar-logout');
+            if (logout) {
+                logout.remove();
+            }
+
+            // Supprime #lang-switcher-toolbar
+            const langSwitcher = document.getElementById('lang-switcher-toolbar');
+            if (langSwitcher) {
+                langSwitcher.remove();
+            }
+
+        });
+    </script>
+</div>
+
+
+</body>
+
+</html>

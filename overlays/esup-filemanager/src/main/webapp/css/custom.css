@@ -1,0 +1,4 @@
+body {
+    padding-top: var(--recia-header-height, 68px);
+    height: calc(100vh - var(--recia-header-height, 68px));
+}

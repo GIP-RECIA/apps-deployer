@@ -19,9 +19,12 @@
     <link rel="stylesheet" th:href="@{/css/file-tree.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/esup-responsive.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/details-modern.css}" type="text/css">
+    <th:block th:replace="~{customizable-header :: styles}"></th:block>
+
 
 </head>
 <body class="d-flex flex-column min-vh-100">
+<div th:replace="~{customizable-header :: content}"></div>
 <!-- WCAG 2.4.1 skip link -->
 <a href="#rightPanel" class="visually-hidden-focusable" th:text="#{skip.to.main}">Skip to main content</a>
 
@@ -134,6 +137,8 @@
 
 <!-- ES6 Modules - Modern application -->
 <script type="module" th:src="@{/js/esup-stock-modern.js}"></script>
+
+
 
 <!-- Responsive body content -->
 <div th:replace="~{body-responsive :: body}"></div>
