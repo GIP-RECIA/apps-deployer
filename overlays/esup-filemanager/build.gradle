@@ -1,0 +1,8 @@
+dependencies {
+    overlay "org.esupportail.portlet.filemanager:esup-filemanager:${esupFilemanagerVersion}@war"
+}
+
+war {
+    archiveFileName="esup-filemanager.war"
+    classpath = classpath.files
+}
