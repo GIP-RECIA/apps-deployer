@@ -1,5 +1,11 @@
 dependencies {
     overlay "org.esupportail.portlet.filemanager:esup-filemanager:${esupFilemanagerVersion}@war"
+
+    compileOnly("org.springframework.boot:spring-boot:3.5.12@jar")
+    compileOnly("org.springframework:spring-context:6.2.17@jar")
+    compileOnly("org.springframework:spring-web:6.2.17@jar")
+    compileOnly("org.springframework.boot:spring-boot-autoconfigure:3.5.12@jar")
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0@jar")
 }
 
 war {
