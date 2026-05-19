@@ -1,12 +1,10 @@
-import scaldingspoon.gradle.WarOverlayPlugin
-
 subprojects {
 
-    apply plugin: 'maven'
-    apply plugin: WarOverlayPlugin
+    apply plugin: 'war'
+    apply plugin: 'maven-publish'
     apply plugin: org.esco.script.gradle.plugins.GradleTomcatDeployPlugin
 
-    task allDeps(type: DependencyReportTask) {}
+    task allDeps(type: DependencyReportTask)
 
     repositories {
         mavenLocal()
@@ -24,22 +22,24 @@ subprojects {
         maven {
             url "https://nexus.recia.dev/repository/snapshots/"
         }
-
-    }
-
-    warOverlay {
-        // Include the jar files in the WAR (default is false).
-        includeWarJars true
     }
 
     configurations {
-        war {}
+        overlay
         shell
         impexp
     }
 
-    artifacts {
-        war tasks.war
+    tasks.named('war') {
+
+        from {
+            configurations.overlay.collect { zipTree(it) }
+        }
+
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
+    artifacts {
+        archives tasks.war
+    }
 }

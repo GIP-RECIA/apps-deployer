@@ -1,5 +1,5 @@
 dependencies {
-    runtime "com.github.psi-probe:psi-probe-web:${psiProbeVersion}@war"
+    overlay "com.github.psi-probe:psi-probe-web:${psiProbeVersion}@war"
 }
 
 war {
