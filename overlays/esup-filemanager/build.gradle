@@ -10,6 +10,15 @@ dependencies {
     compileOnly("org.springframework:spring-core:6.2.17@jar")
     compileOnly("org.springframework:spring-beans:6.2.17@jar")
     compileOnly("jakarta.activation:jakarta.activation-api:2.1.1@jar")
+    compileOnly("org.springframework.security:spring-security-web:6.5.9@jar")
+    compileOnly("org.springframework.security:spring-security-config:6.5.9@jar")
+    compileOnly("org.springframework.security:spring-security-cas:6.5.9@jar")
+    compileOnly("org.springframework.security:spring-security-core:6.5.9@jar")
+    compileOnly("org.apereo.cas.client:cas-client-core:4.0.4@jar")
+    compileOnly("org.springframework.boot:spring-boot-starter-security:3.5.12@jar")
+
+    //required because of overlay of .java file importing another class from the same project
+    implementation("org.esupportail.portlet.filemanager:esup-filemanager:6.0.0-SNAPSHOT-esco-1.0.5:classes")
 }
 
 war {
