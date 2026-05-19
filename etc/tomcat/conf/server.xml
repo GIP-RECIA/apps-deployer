@@ -203,8 +203,8 @@
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esup-filemanager/"/>
           </Context>
 
-          <Context path="/cerbere2" docBase="${server.webapps}/cerbere2" reloadable="true"  crossContext="true" />
-          <Context path="/MCE" docBase="${server.webapps}/moncompte" reloadable="true"  crossContext="true" />
+<!--          <Context path="/cerbere2" docBase="${server.webapps}/cerbere2" reloadable="true"  crossContext="true" />-->
+<!--          <Context path="/MCE" docBase="${server.webapps}/moncompte" reloadable="true"  crossContext="true" />-->
 
           <Context path="/manager" docBase="${server.home}/webapps/manager" reloadable="false" antiResourceLocking="false" privileged="true" useHttpOnly="true"/>
           <Context path="/probe" docBase="${server.webapps}/psi-probe" reloadable="false" antiResourceLocking="false" privileged="true" useHttpOnly="true"/>
