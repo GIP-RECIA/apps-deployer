@@ -2,6 +2,12 @@
  * File Upload Manager - Gestion de l'upload de fichiers
  * Support XHR, multiples fichiers, bouton et drag & drop depuis le bureau
  */
+
+import {
+    raiseEventUpload
+} from './dnma-filemanager.js'
+
+
 export class FileUploadManager {
     constructor(options = {}) {
         this.options = {
@@ -307,6 +313,7 @@ export class FileUploadManager {
 
             xhr.open('POST', this.options.uploadUrl, true);
             xhr.setRequestHeader('X-XSRF-TOKEN', this.getCsrf())
+            raiseEventUpload();
             xhr.send(formData);
 
             // Sauvegarder l'XHR pour pouvoir l'annuler

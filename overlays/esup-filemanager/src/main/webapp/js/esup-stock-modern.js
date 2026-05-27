@@ -8,6 +8,7 @@ import { FileTree } from './file-tree.js';
 import { DragDropManager } from './drag-drop-manager.js';
 import { UIComponents } from './ui-components.js';
 import { FileUploadManager } from './file-upload-manager.js';
+import {raiseEventActif, raiseEventDownload, raiseEventPassif} from "./dnma-filemanager.js";
 
 class EsupFileManager {
     constructor() {
@@ -623,12 +624,14 @@ class EsupFileManager {
         // Load selected directory content
         // Disable tree sync since we're coming from the tree
         await this.loadDirectoryContent(path, false);
+        raiseEventPassif();
     }
 
     async handleTreeNodeOpen(node, data) {
         console.log('Tree node opened:', node);
         // Apply drag & drop to new elements
         this.refreshDragDrop();
+        raiseEventPassif();
     }
 
     handleTreeLoad(data) {
@@ -683,6 +686,9 @@ class EsupFileManager {
                 link.dataset.clickTimeout = setTimeout(() => {
                     link.dataset.clicks = 0;
                     this.selectFile(link);
+                    raiseEventActif();
+                    // raiseEventDownload();
+                    // TODO choisir entre actif et download
                 }, 300);
             } else {
                 clearTimeout(link.dataset.clickTimeout);
@@ -949,6 +955,7 @@ class EsupFileManager {
     // File operations
 
     async copyFiles() {
+        raiseEventActif();
         const selectedPaths = this.getSelectedFilePaths();
         if (selectedPaths.length === 0) {
             UIComponents.showError(window.i18n?.noFileSelected || 'No file selected.');
@@ -972,6 +979,7 @@ class EsupFileManager {
     }
 
     async cutFiles() {
+        raiseEventActif();
         const selectedPaths = this.getSelectedFilePaths();
         if (selectedPaths.length === 0) {
             UIComponents.showError(window.i18n?.noFileSelected || 'No file selected.');
@@ -995,6 +1003,7 @@ class EsupFileManager {
     }
 
     async pasteFiles() {
+        raiseEventActif();
         if (this.clipboard.files.length === 0) {
             UIComponents.showError(window.i18n?.clipboardEmpty || 'Clipboard is empty.');
             return;
@@ -1030,6 +1039,7 @@ class EsupFileManager {
     }
 
     async deleteFiles() {
+        raiseEventActif();
         const selectedPaths = this.getSelectedFilePaths();
         if (selectedPaths.length === 0) {
             UIComponents.showError(window.i18n?.noFileSelected || 'No file selected.');
@@ -1088,6 +1098,7 @@ class EsupFileManager {
 
     async handleCreateDirectory() {
         // Guard: folder creation is only available when inside a drive
+        raiseEventActif();
         if (!this.isInDrive) {
             console.warn('Folder creation is not available outside a drive.');
             return;
@@ -1138,6 +1149,7 @@ class EsupFileManager {
     }
 
     async handleRename() {
+        raiseEventActif();
         const selectedPaths = this.getSelectedFilePaths();
         if (selectedPaths.length !== 1) {
             UIComponents.showError(window.i18n?.selectOneItem || 'Please select exactly one item.');
@@ -1231,6 +1243,7 @@ class EsupFileManager {
             return;
         }
         window.location.href = this.config.downloadFileURL + '?dir=' + encodeURIComponent(path);
+        raiseEventDownload();
     }
 
     downloadSelectedFiles() {
@@ -1254,6 +1267,7 @@ class EsupFileManager {
             window.location.href = this.config.downloadZipURL + '?dirs=' +
                 selectedPaths.map(p => encodeURIComponent(p)).join(',');
         }
+        raiseEventDownload();
     }
 
     downloadSelectedAsZip() {
@@ -1266,6 +1280,7 @@ class EsupFileManager {
         // Always download as ZIP
         window.location.href = this.config.downloadZipURL + '?dirs=' +
             selectedPaths.map(p => encodeURIComponent(p)).join(',');
+        raiseEventDownload();
     }
 
     handleFileDrop(sourceData, targetPath) {
@@ -1341,6 +1356,7 @@ class EsupFileManager {
      * Handles refresh button click
      */
     async handleRefresh() {
+        raiseEventActif();
         console.log('🔄 Refresh button clicked');
         UIComponents.showWaitCursor();
         try {

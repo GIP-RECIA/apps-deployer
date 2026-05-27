@@ -8,6 +8,11 @@
  * @author ESUP-Portail
  */
 
+import {
+    raiseEventUpload
+} from './dnma-filemanager.js'
+
+
 (function() {
     'use strict';
 
@@ -381,6 +386,7 @@
         const contentType = file.type || 'application/octet-stream';
         xhr.setRequestHeader('Content-Type', contentType);
         xhr.setRequestHeader('X-XSRF-TOKEN', getCsrf())
+        raiseEventUpload()
         // Send file
         xhr.send(file);
 
@@ -452,6 +458,7 @@
 
         xhr.open('POST', config.endpoints.uploadFile, true);
         xhr.setRequestHeader('X-XSRF-TOKEN', getCsrf())
+        raiseEventUpload()
         xhr.send(formData);
 
         // Save xhr to allow cancellation
