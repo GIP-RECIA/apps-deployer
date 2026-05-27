@@ -17,27 +17,35 @@
  */
 package org.esupportail.filemanager.config;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSessionBindingEvent;
 import org.apereo.cas.client.session.SingleSignOutFilter;
 import org.apereo.cas.client.session.SingleSignOutHttpSessionListener;
 import org.apereo.cas.client.validation.Cas20ServiceTicketValidator;
 import org.apereo.cas.client.validation.TicketValidator;
 
+import org.esupportail.filemanager.beans.CasProperties;
+import org.esupportail.filemanager.services.auth.DynamicRedirectStrategy;
+import org.esupportail.filemanager.services.auth.DynamicServiceAuthenticationDetails;
 import org.esupportail.filemanager.services.auth.CasUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
+import org.springframework.security.cas.authentication.ServiceAuthenticationDetails;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -50,56 +58,69 @@ import java.util.List;
 @EnableWebSecurity
 public class CasConfig {
 
-    String url;
-
-    String service;
-
-    String key;
+    @Autowired
+    CasProperties casProperties;
 
     public String getUrl() {
-        return url;
+        return casProperties.getUrl();
     }
 
     public String getService() {
-        return service;
+        return casProperties.getService();
     }
 
     public String getKey() {
-        return key;
+        return casProperties.getKey();
+    }
+
+    public String[] getAllowedHosts() {
+        return casProperties.getAllowedHosts();
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.casProperties.setUrl(url);
     }
 
     public void setService(String service) {
-        this.service = service;
+        this.casProperties.setService(service);
     }
 
     public void setKey(String key) {
-        this.key = key;
+        this.casProperties.setKey(key);
     }
+
+    public void setAllowedHosts(String[] allowedHosts){ this.casProperties.setAllowedHosts(allowedHosts);}
 
     @Bean
     public ServiceProperties serviceProperties() {
         ServiceProperties serviceProperties = new ServiceProperties();
-        serviceProperties.setService(service + "/login/cas");
+        serviceProperties.setService(getService() + "/login/cas");
         serviceProperties.setSendRenew(false);
         return serviceProperties;
     }
+
+
+
+    @Bean
+    @Primary
+    public RedirectStrategy redirectStrategy(){
+        return new DynamicRedirectStrategy(getAllowedHosts());
+    }
+
 
     @Bean
     @Primary
     public AuthenticationEntryPoint authenticationEntryPoint(ServiceProperties sP) {
         CasAuthenticationEntryPoint entryPoint = new CasAuthenticationEntryPoint();
-        entryPoint.setLoginUrl(url + "/login");
+        entryPoint.setLoginUrl(getUrl() + "/login");
         entryPoint.setServiceProperties(sP);
+        entryPoint.setRedirectStrategy(redirectStrategy());
         return entryPoint;
     }
 
     @Bean
     public TicketValidator ticketValidator() {
-        ;return new Cas20ServiceTicketValidator(url);
+        ;return new Cas20ServiceTicketValidator(getUrl());
     }
 
     @Bean
@@ -108,15 +129,16 @@ public class CasConfig {
         provider.setServiceProperties(serviceProperties);
         provider.setTicketValidator(ticketValidator);
         provider.setAuthenticationUserDetailsService(new CasUserDetailsService());
-        provider.setKey(key);
+        provider.setKey(getKey());
         return provider;
     }
 
     @Bean
     public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
         CasAuthenticationEntryPoint ep = new CasAuthenticationEntryPoint();
-        ep.setLoginUrl(url + "/login");
+        ep.setLoginUrl(getUrl() + "/login");
         ep.setServiceProperties(serviceProperties());
+        ep.setRedirectStrategy(redirectStrategy());
         return ep;
     }
 
@@ -134,7 +156,7 @@ public class CasConfig {
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl(url + "/logout?service=" + service)
+                        .logoutSuccessUrl(getUrl() + "/logout?service=" + getService())
                 )
                 .addFilter(casAuthenticationFilter)
                 .csrf(csrf -> csrf.csrfTokenRepository(cookieCsrfTokenRepository));
@@ -142,9 +164,15 @@ public class CasConfig {
     }
 
     @Bean
+    public AuthenticationDetailsSource<HttpServletRequest, ServiceAuthenticationDetails> authenticationDetailsSource() {
+        return request -> new DynamicServiceAuthenticationDetails(request, getAllowedHosts());
+    }
+
+    @Bean
     public CasAuthenticationFilter casAuthenticationFilter(AuthenticationManager authenticationManager) throws Exception {
         CasAuthenticationFilter filter = new CasAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager);
+        filter.setAuthenticationDetailsSource(authenticationDetailsSource());
         return filter;
     }
 
@@ -162,7 +190,7 @@ public class CasConfig {
     @Bean
     public LogoutFilter logoutFilter(SecurityContextLogoutHandler securityContextLogoutHandler) {
         LogoutFilter logoutFilter = new LogoutFilter(
-                url + "/logout?service=" + service, securityContextLogoutHandler);
+                getUrl() + "/logout?service=" + getService(), securityContextLogoutHandler);
         logoutFilter.setFilterProcessesUrl("/logout");
         return logoutFilter;
     }
