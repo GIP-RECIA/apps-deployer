@@ -1,6 +1,8 @@
 package org.esupportail.filemanager.beans;
 
+import org.apereo.cas.client.session.HashMapBackedSessionMappingStorage;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -43,4 +45,10 @@ public class CasProperties {
     public void setAllowedHosts(String[] allowedHosts) {
         this.allowedHosts = allowedHosts;
     }
+
+    @Bean
+    public HashMapBackedSessionMappingStorage ticketSessionMappingStorage() {
+        return new HashMapBackedSessionMappingStorage();
+    }
+
 }

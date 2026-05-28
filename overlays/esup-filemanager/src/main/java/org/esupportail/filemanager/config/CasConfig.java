@@ -17,8 +17,14 @@
  */
 package org.esupportail.filemanager.config;
 
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionBindingEvent;
+import org.apereo.cas.client.session.HashMapBackedSessionMappingStorage;
 import org.apereo.cas.client.session.SingleSignOutFilter;
 import org.apereo.cas.client.session.SingleSignOutHttpSessionListener;
 import org.apereo.cas.client.validation.Cas20ServiceTicketValidator;
@@ -33,7 +39,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.event.EventListener;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -50,13 +56,17 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.filter.OncePerRequestFilter;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 @ConfigurationProperties(prefix="cas")
 @EnableWebSecurity
 public class CasConfig {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DynamicRedirectStrategy.class);
 
     @Autowired
     CasProperties casProperties;
@@ -153,13 +163,22 @@ public class CasConfig {
                 .authenticationEntryPoint(casAuthenticationEntryPoint())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.POST, "/login/cas**")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/login/cas**")
+                        .permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl(getUrl() + "/logout?service=" + getService())
                 )
+                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
                 .addFilter(casAuthenticationFilter)
-                .csrf(csrf -> csrf.csrfTokenRepository(cookieCsrfTokenRepository));
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(cookieCsrfTokenRepository)
+                        .ignoringRequestMatchers("/login/cas**")
+                )
+        ;
         return http.build();
     }
 
@@ -196,14 +215,157 @@ public class CasConfig {
     }
 
     @Bean
-    public SingleSignOutFilter singleSignOutFilter() {
-        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
-        singleSignOutFilter.setIgnoreInitConfiguration(true);
-        return singleSignOutFilter;
+    public Filter singleSignOutFilter() {
+
+        SingleSignOutFilter delegate = new SingleSignOutFilter();
+        delegate.setIgnoreInitConfiguration(true);
+        delegate.setArtifactParameterName("ticket");
+        delegate.setLogoutParameterName("logoutRequest");
+
+        return new OncePerRequestFilter() {
+
+            @Override
+            protected void doFilterInternal(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain filterChain)
+                    throws ServletException, IOException {
+
+                String logoutRequest = request.getParameter("logoutRequest");
+                String ip = request.getRemoteAddr();
+                String uri = request.getRequestURI();
+                String method = request.getMethod();
+
+                log.debug("[SLO] Requête entrante : {} {} depuis IP={}", method, uri, ip);
+
+                if (logoutRequest != null) {
+
+                    log.trace("[SLO] URI appelée : {}", uri);
+                    log.trace("[SLO] Adresse IP appelante : {}", ip);
+                    log.trace("[SLO] XML logoutRequest brut :\n{}", logoutRequest);
+
+                    try {
+
+                        var factory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+                        var builder = factory.newDocumentBuilder();
+
+                        var doc = builder.parse(
+                                new org.xml.sax.InputSource(
+                                        new java.io.StringReader(logoutRequest)));
+
+                        doc.getDocumentElement().normalize();
+
+                        var nameIdNode =
+                                doc.getElementsByTagName("saml:NameID").item(0);
+
+                        var sessionIndexNode =
+                                doc.getElementsByTagName("samlp:SessionIndex").item(0);
+
+                        String nameId =
+                                nameIdNode != null
+                                        ? nameIdNode.getTextContent()
+                                        : "inconnu";
+
+                        String ticket =
+                                sessionIndexNode != null
+                                        ? sessionIndexNode.getTextContent()
+                                        : "inconnu";
+
+                        boolean isSessionTicket = ticket.startsWith("ST-");
+
+                        if (isSessionTicket) {
+
+                            log.debug(
+                                    "[SLO] Ticket Invalidation Request will be handled: {}",
+                                    ticket);
+
+//                            log.info("getID_TO_SESSION_KEY_MAPPING {}", ticketSessionMappingStorage.getID_TO_SESSION_KEY_MAPPING().entrySet().toString());
+//                            log.info("getMANAGED_SESSIONS {}", ticketSessionMappingStorage.getMANAGED_SESSIONS().entrySet().toString());
+
+
+                            HttpSession httpSession =
+                                    ticketSessionMappingStorage
+                                            .removeSessionByMappingId(ticket);
+
+                            if(Objects.isNull(httpSession)){
+                                log.debug("[SLO] Try other mapping to remove");
+                                        ticketSessionMappingStorage
+                                                .removeBySessionById(ticket);
+                            }
+
+
+
+                            log.debug("[SLO] Utilisateur CAS (NameID) : {}", nameId);
+
+                            if (httpSession != null) {
+
+                                log.debug("[SLO] Session id: {}", httpSession.getId());
+
+                                try {
+                                    httpSession.invalidate();
+
+                                    log.debug(
+                                            "[SLO] Invalidation réussie de la session [{}]",
+                                            httpSession.getId());
+
+                                } catch (IllegalStateException e) {
+
+                                    log.debug(
+                                            "[SLO] Session déjà invalidée [{}]",
+                                            httpSession.getId());
+                                }
+
+                            } else {
+
+                                log.warn(
+                                        "[SLO] Aucune session trouvée pour le ticket [{}]",
+                                        ticket);
+                            }
+
+                        } else {
+
+                            log.debug(
+                                    "[SLO] Ticket Invalidation Request ignored: {}",
+                                    ticket);
+                        }
+
+                    } catch (Exception e) {
+
+                        log.error(
+                                "[SLO] Erreur de parsing XML logoutRequest",
+                                e);
+                    }
+                }
+                else {
+
+                    String ticket = request.getParameter("ticket");
+
+                    if (ticket != null) {
+
+                        HttpSession session = request.getSession(false);
+
+                        if (session != null) {
+
+                            ticketSessionMappingStorage.addSessionById(
+                                    ticket,
+                                    session);
+
+                            log.debug(
+                                    "[SLO] Mapping ajouté ticket [{}] -> session [{}]",
+                                    ticket,
+                                    session.getId());
+                        }
+                    }
+
+                    filterChain.doFilter(request, response);
+                }
+
+                // delegate.doFilter(request, response, filterChain);
+            }
+        };
     }
 
-    @EventListener
-    public SingleSignOutHttpSessionListener singleSignOutHttpSessionListener(HttpSessionBindingEvent event) {
-        return new SingleSignOutHttpSessionListener();
-    }
+
+
+    @Autowired
+    HashMapBackedSessionMappingStorage ticketSessionMappingStorage;
 }
