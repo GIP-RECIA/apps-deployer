@@ -499,7 +499,6 @@ public class SmbAccessImpl extends FsAccess implements DisposableBean {
 
         try {
 
-            log.info("DEBUG-EWANN : smbPath {}, relativePath {} and valid shares {}", smbPath, relativePath, validShares);
             String sharePart = null;
 
             if(Objects.nonNull(validShares)){
@@ -544,7 +543,6 @@ public class SmbAccessImpl extends FsAccess implements DisposableBean {
                     : "";
 
             if(Objects.nonNull(validShares)){
-                log.info("EWANN TITLE GET PATH AS JS, title {}, smbPath {}, parentRelPath {}, relativePath {}", title, smbPath, parentRelPath, relativePath);
                 parentRelPath = relativePath.contains("/")
                         ? relativePath.substring(0, relativePath.lastIndexOf('/'))
                         : relativePath;
@@ -1017,9 +1015,6 @@ public class SmbAccessImpl extends FsAccess implements DisposableBean {
     public boolean moveCopyFilesIntoDirectory(String dir, List<String> filesToCopy, boolean copy) {
 
         String dirSmbPath = buildSmbPath(dir);
-        log.info("EWANN, dir {}, et premier de la liste : {}", dir, filesToCopy.getFirst());
-        log.info("EWANN, dirSmbPath {}", dirSmbPath);
-        log.info("EWANN, Objects.nonNull(validShares) : {}",Objects.nonNull(validShares));
 
 // INVERSER BACKSLASH VERS SLASH
         if(Objects.nonNull(validShares)) {
@@ -1039,20 +1034,14 @@ public class SmbAccessImpl extends FsAccess implements DisposableBean {
 
                 List<String> filesPathTemp = new ArrayList<>();
                 for (String srcRelPath : filesToCopy) {
-                    log.info("EWANN dir srcRelPath  {}", srcRelPath);
                     String[] srcPathArray = srcRelPath.split("/", 2);
-                    log.info("EWANN srcPathArray  {}", Arrays.toString(srcPathArray));
                     if (srcPathArray.length > 1) {
                         filesPathTemp.add(srcPathArray[1]);
                     } else {
                         filesPathTemp.add("");
                     }
                 }
-                log.info("EWANN filesPathTemp {}", filesPathTemp);
-
                 filesToCopy = filesPathTemp;
-
-                log.info("EWANN filesToCopy {}", filesToCopy);
 
             }
         }
@@ -1104,9 +1093,6 @@ public class SmbAccessImpl extends FsAccess implements DisposableBean {
      * Recursively copies an SMB entry (file or folder) to a new path on the same share.
      */
     private void copySmbEntry(String srcPath, String destPath) throws IOException {
-
-
-        log.info("EWANN src path {}, dest path {}", srcPath, destPath);
 
         String srcPathPrefix;
         if(Objects.nonNull(validShares)){

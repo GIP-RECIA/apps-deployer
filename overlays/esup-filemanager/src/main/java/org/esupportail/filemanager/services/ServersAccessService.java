@@ -241,8 +241,6 @@ public class ServersAccessService implements DisposableBean, IServersAccessServi
         boolean isSameDrive;
         if(driveName.equals(getDrive(filesToCopy.getFirst()))){
             if(this.getFsAccess(driveName).isDiscoverableHost()){
-                log.info("EWANN MOVECOPY dir {}", dir);
-                log.info("EWANN MOVECOPY filesToCopy first {}", filesToCopy.getFirst());
 
                 // si le drive est de type "discovery" alors le premier folder est le vrai nom du drive
 
@@ -385,54 +383,32 @@ public class ServersAccessService implements DisposableBean, IServersAccessServi
 
     public String getDrive(String dir) {
 
-        log.info("EWANN get Drive dir {}", dir);
         String drive = null;
         if(dir != null && dir.length() > JsTreeFile.ROOT_DRIVE.length()) {
             dir = dir.substring(JsTreeFile.ROOT_DRIVE.length());
-            log.info("EWANN get Drive dir.substring(JsTreeFile.ROOT_DRIVE.length()); {}", dir);
 
             String[] driveAndDir = dir.split(JsTreeFile.DRIVE_PATH_SEPARATOR, 3);
-            log.info("EWANN get Drive driveAndDir {}", Arrays.toString(driveAndDir));
 
             if(driveAndDir.length > 1) {
-                log.info("EWANN driveAndDir.length > 1");
                 drive = driveAndDir[1];
             }
         } else {
             log.warn("Can't get drive because dir is null or too short: '{}'", dir);
         }
-        log.info("EWANN drive returned is {}", drive);
-
-
-//            if(this.getFsAccess(drive).isDiscoverableHost()){
-//                log.info("EWANN GET DRIVE dir {}", dir);
-//                // si le drive est de type "discovery" alors le premier folder est le vrai nom du drive
-//                String dirFolders = Arrays.asList(dir.split("~")).getLast();
-//                // FS:Stockage~DRIVE NAMEF~firstFolder/secondFolder/... ->  firstFolder/secondFolder/...
-//                String dirFirstFolder = Arrays.asList(dirFolders.split("/", 2)).getFirst();
-//
-//                drive = drive
-//            }
-
-
-
         return drive;
     }
 
     private String getLocalDir(String dir) {
 
-        log.info("EWANN GET LOCAL DIR INPUT {}", dir);
 
         dir = dir.substring(JsTreeFile.ROOT_DRIVE.length());
         String[] driveAndDir = dir.split(JsTreeFile.DRIVE_PATH_SEPARATOR, 3);
         if(driveAndDir.length > 2)
         {
-            log.info("EWANN GET LOCAL DIR OUTPUT {}",  driveAndDir[2]);
             return driveAndDir[2];
         }
 
         else{
-            log.info("EWANN GET LOCAL DIR OUTPUT empty");
             return "";
         }
     }
