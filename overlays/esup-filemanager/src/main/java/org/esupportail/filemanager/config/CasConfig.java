@@ -23,14 +23,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpSessionBindingEvent;
-import org.apereo.cas.client.session.HashMapBackedSessionMappingStorage;
 import org.apereo.cas.client.session.SingleSignOutFilter;
-import org.apereo.cas.client.session.SingleSignOutHttpSessionListener;
 import org.apereo.cas.client.validation.Cas20ServiceTicketValidator;
 import org.apereo.cas.client.validation.TicketValidator;
 
 import org.esupportail.filemanager.beans.CasProperties;
+import org.esupportail.filemanager.services.auth.CasSuccessHandler;
+import org.esupportail.filemanager.services.auth.CustomSessionMappingStorage;
 import org.esupportail.filemanager.services.auth.DynamicRedirectStrategy;
 import org.esupportail.filemanager.services.auth.DynamicServiceAuthenticationDetails;
 import org.esupportail.filemanager.services.auth.CasUserDetailsService;
@@ -50,11 +49,13 @@ import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -152,6 +153,60 @@ public class CasConfig {
         return ep;
     }
 
+
+  /*  2026-06-01 12:15:47.534 TRACE [catalina-exec-684] org.springframework.security.web.FilterChainProxy: Invoking DisableEncodeUrlFilter (1/13)
+2026-06-01 12:15:47.534 TRACE [catalina-exec-684] org.springframework.security.web.FilterChainProxy: Invoking WebAsyncManagerIntegrationFilter (2/13)
+ENTRE CES DEUX FILTRES
+
+2026-06-01 12:15:47.534 TRACE [catalina-exec-684] org.springframework.security.web.FilterChainProxy: Invoking SecurityContextHolderFilter (3/13)
+*/
+
+
+
+    @Bean
+    Filter removeSessionIfSessionNoLongerExistInMappingFilter() {
+        OncePerRequestFilter filter = new OncePerRequestFilter() {
+            @Override
+            protected void doFilterInternal(
+                    HttpServletRequest request,
+                    HttpServletResponse response,
+                    FilterChain filterChain
+            ) throws ServletException, IOException {
+
+                HttpSession session = request.getSession(false);
+
+                if (Objects.nonNull(session)) {
+                    String sessionId = session.getId();
+                    log.info("SESSION NON NULL");
+
+                    if (!ticketSessionMappingStorage.hasSessionId(sessionId)) {
+
+                        log.info("MAPPING NON HAS SESSION ID");
+
+                        // 1. vider auth Spring Security
+                        SecurityContextHolder.clearContext();
+
+                        // 2. invalider session proprement
+                        session.invalidate();
+                    }else{
+                        log.info("MAPPING HAS SESSION ID");
+
+                    }
+                }
+
+                if(Objects.isNull(session)){
+                    log.info("SESSION IS NULL");
+                }
+
+                filterChain.doFilter(request, response);
+            }
+        };
+
+        filter.setBeanName("RemoveSessionIfSessionNoLongerExistInMappingFilter");
+        return filter;
+    }
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, CasAuthenticationFilter casAuthenticationFilter) throws Exception {
 
@@ -174,6 +229,7 @@ public class CasConfig {
                 )
                 .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
                 .addFilter(casAuthenticationFilter)
+                .addFilterAfter(removeSessionIfSessionNoLongerExistInMappingFilter(), SecurityContextHolderFilter.class)
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(cookieCsrfTokenRepository)
                         .ignoringRequestMatchers("/login/cas**")
@@ -192,6 +248,7 @@ public class CasConfig {
         CasAuthenticationFilter filter = new CasAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager);
         filter.setAuthenticationDetailsSource(authenticationDetailsSource());
+        filter.setAuthenticationSuccessHandler(casSuccessHandler);
         return filter;
     }
 
@@ -280,46 +337,12 @@ public class CasConfig {
 
 //                            log.info("getID_TO_SESSION_KEY_MAPPING {}", ticketSessionMappingStorage.getID_TO_SESSION_KEY_MAPPING().entrySet().toString());
 //                            log.info("getMANAGED_SESSIONS {}", ticketSessionMappingStorage.getMANAGED_SESSIONS().entrySet().toString());
+                            String sessionId = ticketSessionMappingStorage.getSessionIdFromSessionTicket(ticket);
 
-
-                            HttpSession httpSession =
-                                    ticketSessionMappingStorage
-                                            .removeSessionByMappingId(ticket);
-
-                            if(Objects.isNull(httpSession)){
-                                log.debug("[SLO] Try other mapping to remove");
-                                        ticketSessionMappingStorage
-                                                .removeBySessionById(ticket);
-                            }
-
-
+                            ticketSessionMappingStorage.removeSessionTicket(ticket);
 
                             log.debug("[SLO] Utilisateur CAS (NameID) : {}", nameId);
 
-                            if (httpSession != null) {
-
-                                log.debug("[SLO] Session id: {}", httpSession.getId());
-
-                                try {
-                                    httpSession.invalidate();
-
-                                    log.debug(
-                                            "[SLO] Invalidation réussie de la session [{}]",
-                                            httpSession.getId());
-
-                                } catch (IllegalStateException e) {
-
-                                    log.debug(
-                                            "[SLO] Session déjà invalidée [{}]",
-                                            httpSession.getId());
-                                }
-
-                            } else {
-
-                                log.warn(
-                                        "[SLO] Aucune session trouvée pour le ticket [{}]",
-                                        ticket);
-                            }
 
                         } else {
 
@@ -337,35 +360,34 @@ public class CasConfig {
                 }
                 else {
 
-                    String ticket = request.getParameter("ticket");
-
-                    if (ticket != null) {
-
-                        HttpSession session = request.getSession(false);
-
-                        if (session != null) {
-
-                            ticketSessionMappingStorage.addSessionById(
-                                    ticket,
-                                    session);
-
-                            log.debug(
-                                    "[SLO] Mapping ajouté ticket [{}] -> session [{}]",
-                                    ticket,
-                                    session.getId());
-                        }
-                    }
+//                    String ticket = request.getParameter("ticket");
+//
+//                    if (ticket != null) {
+//
+//                        HttpSession session = request.getSession(false);
+//
+//                        if (session != null) {
+//
+//                            ticketSessionMappingStorage.addSessionById(
+//                                    ticket,
+//                                    session);
+//
+//                            log.debug(
+//                                    "[SLO] Mapping ajouté ticket [{}] -> session [{}]",
+//                                    ticket,
+//                                    session.getId());
+//                        }
+//                    }
 
                     filterChain.doFilter(request, response);
                 }
-
-                // delegate.doFilter(request, response, filterChain);
             }
         };
     }
 
-
+    @Autowired
+    private CasSuccessHandler casSuccessHandler;
 
     @Autowired
-    HashMapBackedSessionMappingStorage ticketSessionMappingStorage;
+    CustomSessionMappingStorage ticketSessionMappingStorage;
 }
