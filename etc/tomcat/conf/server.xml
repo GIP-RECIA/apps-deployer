@@ -196,6 +196,12 @@
           <Context path="/sympa-api" docBase="${server.webapps}/sympa-api" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/sympa-api/"/>
           </Context>
+          <Context path="/restriction-rentree-api" docBase="${server.webapps}/restriction-rentree-api" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/restriction-rentree-api/"/>
+          </Context>
+          <Context path="/etab-manager" docBase="${server.webapps}/etab-manager" reloadable="false" crossContext="true">
+               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/etab-manager/"/>
+          </Context>
 
           <Context path="/cerbere2" docBase="${server.webapps}/cerbere2" reloadable="true"  crossContext="true" />
           <Context path="/MCE" docBase="${server.webapps}/moncompte" reloadable="true"  crossContext="true" />
