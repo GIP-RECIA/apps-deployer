@@ -171,9 +171,6 @@
           <Context path="/service-info-api" docBase="${server.webapps}/service-info-api" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/service-info-api/"/>
           </Context>
-          <Context path="/glc2" docBase="${server.webapps}/GLC" reloadable="false" crossContext="true">
-               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/glc/"/>
-          </Context>
           <Context path="/wisemapping" docBase="${server.webapps}/wisemapping" reloadable="false" crossContext="true"/>
           <Context path="/collabsoft" docBase="${server.webapps}/collabsoft" reloadable="false" crossContext="true">
                 <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/collabsoft/"/>
