@@ -190,9 +190,9 @@
           <Context path="/mail-api" docBase="${server.webapps}/mail-api" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/mail-api/"/>
           </Context>
-<!--          <Context path="/sympa-api" docBase="${server.webapps}/sympa-api" reloadable="false" crossContext="true">-->
-<!--              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/sympa-api/"/>-->
-<!--          </Context>-->
+          <Context path="/sympa-api" docBase="${server.webapps}/sympa-api" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/sympa-api/"/>
+          </Context>
 <!--          <Context path="/restriction-rentree-api" docBase="${server.webapps}/restriction-rentree-api" reloadable="false" crossContext="true">-->
 <!--              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/restriction-rentree-api/"/>-->
 <!--          </Context>-->
