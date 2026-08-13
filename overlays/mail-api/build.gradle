@@ -1,8 +1,8 @@
 dependencies {
-    runtime "fr.recia.widget.api:mail-api:${mailAPIVersion}@war"
+    overlay "fr.recia.widget.api:mail-api:${mailAPIVersion}@war"
 }
 
 war {
-    archiveName = 'mail-api.war'
+    archiveFileName="mail-api.war"
     classpath = classpath.files
 }
