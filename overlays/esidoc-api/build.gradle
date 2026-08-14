@@ -1,8 +1,8 @@
 dependencies {
-    runtime "fr.recia.esidoc.api:esidoc-api:${esidocAPIVersion}@war"
+    overlay "fr.recia.esidoc.api:esidoc-api:${esidocAPIVersion}@war"
 }
 
 war {
-    archiveName = 'esidoc-api.war'
+    archiveFileName = "esidoc-api.war"
     classpath = classpath.files
 }
