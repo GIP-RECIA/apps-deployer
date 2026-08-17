@@ -1,0 +1,8 @@
+dependencies {
+    overlay "fr.recia.pronote:pronote-api:${pronoteApiVersion}@war"
+}
+
+war {
+    archiveFileName="pronote-api.war"
+    classpath = classpath.files
+}

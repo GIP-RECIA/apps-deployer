@@ -202,6 +202,9 @@
           <Context path="/esup-filemanager" docBase="${server.webapps}/esup-filemanager" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esup-filemanager/"/>
           </Context>
+          <Context path="/pronote-api" docBase="${server.webapps}/pronote-api" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/pronote-api/"/>
+          </Context>
 
 <!--          <Context path="/cerbere2" docBase="${server.webapps}/cerbere2" reloadable="true"  crossContext="true" />-->
 <!--          <Context path="/MCE" docBase="${server.webapps}/moncompte" reloadable="true"  crossContext="true" />-->
