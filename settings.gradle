@@ -12,7 +12,7 @@ rootProject.name = 'gradle-war-deployer'
 include 'overlays:psi-probe'
 
 //include "overlays:esup-publisher"
-//include "overlays:pronote-ws"
+include "overlays:pronote-ws"
 //include 'overlays:wisemapping'
 //include 'overlays:collabsoft'
 //include 'overlays:paramuseretab'
