@@ -1,8 +1,8 @@
 dependencies {
-    runtime "fr.recia.collabsoft:esco-collabsoft:${escoCollabsoftVersion}@war"
+    overlay "fr.recia.collabsoft:esco-collabsoft:${escoCollabsoftVersion}@war"
 }
 
 war {
-    archiveName = "collabsoft.war"
+    archiveFileName = "collabsoft.war"
     classpath = classpath.files
 }
