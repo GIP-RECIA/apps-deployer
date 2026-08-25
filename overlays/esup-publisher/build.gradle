@@ -1,9 +1,29 @@
+configurations {
+    esupWarConfig
+}
+
 dependencies {
     runtime "org.esupportail.publisher:esup-publisher-ui:${esupPublisherVersion}@war"
+    implementation "fr.recia.notifications:event-rest-client-kafka:${restClientKafkaVersion}"
+    implementation "org.esupportail.publisher:esup-publisher-ui:${esupPublisherVersion}"
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    esupWarConfig "org.esupportail.publisher:esup-publisher-ui:${esupPublisherVersion}@war"
+    compileOnly files("$buildDir/esup-extracted/WEB-INF/classes")
 }
+
+task extractEsupClasses(type: Copy) {
+    from { zipTree(configurations.esupWarConfig.singleFile) }
+    into "$buildDir/esup-extracted"
+    include 'WEB-INF/classes/**'
+}
+compileJava.dependsOn extractEsupClasses
 
 war {
     archiveName = "esup-publisher.war"
-
+    from(zipTree(configurations.esupWarConfig.singleFile)) {
+        exclude 'META-INF/MANIFEST.MF'
+    }
     classpath = classpath.files
 }
