@@ -172,9 +172,9 @@
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/service-info-api/"/>
           </Context>
 <!--          <Context path="/wisemapping" docBase="${server.webapps}/wisemapping" reloadable="false" crossContext="true"/>-->
-          <Context path="/collabsoft" docBase="${server.webapps}/collabsoft" reloadable="false" crossContext="true">
+          <!--Context path="/collabsoft" docBase="${server.webapps}/collabsoft" reloadable="false" crossContext="true">
                 <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/collabsoft/"/>
-          </Context>
+          </Context-->
 <!--          <Context path="/paramuseretab" docBase="${server.webapps}/paramuseretab" reloadable="false" crossContext="true">-->
 <!--               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/paramuseretab/"/>-->
 <!--          </Context>-->
