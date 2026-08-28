@@ -1,8 +1,0 @@
-dependencies {
-    runtime "fr.recia.esidoc.api:esidoc-api:${esidocAPIVersion}@war"
-}
-
-war {
-    archiveName = 'esidoc-api.war'
-    classpath = classpath.files
-}

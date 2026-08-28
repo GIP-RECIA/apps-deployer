@@ -1,9 +1,0 @@
-dependencies {
-    runtime "fr.recia.pronote.ws:esco-pronote-ws:${pronoteWSVersion}@war"
-}
-
-war {
-    archiveName = 'pronote-ws.war'
-
-    classpath = classpath.files
-}

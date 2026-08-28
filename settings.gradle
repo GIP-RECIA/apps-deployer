@@ -12,16 +12,10 @@ rootProject.name = 'gradle-war-deployer'
 include 'overlays:psi-probe'
 
 include "overlays:esup-publisher"
-include "overlays:pronote-ws"
 include 'overlays:wisemapping'
 include 'overlays:collabsoft'
 include 'overlays:paramuseretab'
 include 'overlays:si-ent-api'
-include 'overlays:mediacentre-api'
 include 'overlays:ressources-diffusables'
-include 'overlays:service-info-api'
-include 'overlays:esidoc-api'
-include 'overlays:mail-api'
-include 'overlays:sympa-api'
 include 'overlays:etab-manager'
 include 'overlays:restriction-rentree-api'

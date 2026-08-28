@@ -1,8 +1,0 @@
-dependencies {
-    runtime "fr.recia.mediacentre.api:esco-mediacentre:${escoMediacentreVersion}@war"
-}
-
-war {
-    archiveName 'mediacentre-api.war'
-    classpath = classpath.files
-}

@@ -1,8 +1,0 @@
-dependencies {
-    runtime "fr.recia:sympa-api:${sympaAPIVersion}@war"
-}
-
-war {
-    archiveName = 'sympa-api.war'
-    classpath = classpath.files
-}
