@@ -162,14 +162,8 @@
           <Context path="/publisher" docBase="${server.webapps}/esup-publisher" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esup-publisher/"/>
           </Context>
-          <Context path="/pronote-ws" docBase="${server.webapps}/pronote-ws" reloadable="false" crossContext="true">
-               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/pronote-ws/"/>
-          </Context>
           <Context path="/si-ent-api" docBase="${server.webapps}/si-ent-api" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/si-ent-api/"/>
-          </Context>
-          <Context path="/service-info-api" docBase="${server.webapps}/service-info-api" reloadable="false" crossContext="true">
-              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/service-info-api/"/>
           </Context>
           <Context path="/wisemapping" docBase="${server.webapps}/wisemapping" reloadable="false" crossContext="true"/>
           <Context path="/collabsoft" docBase="${server.webapps}/collabsoft" reloadable="false" crossContext="true">
@@ -178,20 +172,8 @@
           <Context path="/paramuseretab" docBase="${server.webapps}/paramuseretab" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/paramuseretab/"/>
           </Context>
-          <Context path="/mediacentre-api" docBase="${server.webapps}/mediacentre-api" reloadable="false" crossContext="true">
-               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/mediacentre-api/"/>
-          </Context>
           <Context path="/ressources-diffusables" docBase="${server.webapps}/ressources-diffusables" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/ressources-diffusables/"/>
-          </Context>
-          <Context path="/esidoc-api" docBase="${server.webapps}/esidoc-api" reloadable="false" crossContext="true">
-               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esidoc-api/"/>
-          </Context>
-          <Context path="/mail-api" docBase="${server.webapps}/mail-api" reloadable="false" crossContext="true">
-              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/mail-api/"/>
-          </Context>
-          <Context path="/sympa-api" docBase="${server.webapps}/sympa-api" reloadable="false" crossContext="true">
-              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/sympa-api/"/>
           </Context>
           <Context path="/restriction-rentree-api" docBase="${server.webapps}/restriction-rentree-api" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/restriction-rentree-api/"/>
