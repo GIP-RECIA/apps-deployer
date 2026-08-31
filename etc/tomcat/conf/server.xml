@@ -187,6 +187,9 @@
           <Context path="/esidoc-api" docBase="${server.webapps}/esidoc-api" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esidoc-api/"/>
           </Context>
+          <Context path="/esidoc-ws" docBase="${server.webapps}/esidoc-ws" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esidoc-ws/"/>
+          </Context>
           <Context path="/mail-api" docBase="${server.webapps}/mail-api" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/mail-api/"/>
           </Context>

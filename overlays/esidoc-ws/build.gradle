@@ -1,0 +1,8 @@
+dependencies {
+    overlay "fr.recia.esidoc.api:esidoc-ws:${esidocWSVersion}@war"
+}
+
+war {
+    archiveFileName = "esidoc-ws.war"
+    classpath = classpath.files
+}
