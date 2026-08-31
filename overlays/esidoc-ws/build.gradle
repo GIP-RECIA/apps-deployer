@@ -1,5 +1,5 @@
 dependencies {
-    overlay "fr.recia.esidoc.api:esidoc-ws:${esidocWSVersion}@war"
+    overlay "fr.recia.esidoc.ws:esidoc-ws:${esidocWSVersion}@war"
 }
 
 war {
