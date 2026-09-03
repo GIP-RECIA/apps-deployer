@@ -171,7 +171,7 @@ public class NotificationAspect {
             final ItemStatus status = content.getItem().getStatus();
             final AbstractItem item = content.getItem();
             final String message = item.getSummary();
-            if (status != ItemStatus.PUBLISHED) {
+            if (status.equals(ItemStatus.PENDING)) {
                 final String title = notificationAspectConfig.getTitleModeration();
                 final String link = notificationAspectConfig.getLinkModeration();
                 for (AbstractPermission abstractPermission : perms) {
