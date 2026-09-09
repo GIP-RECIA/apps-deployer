@@ -24,6 +24,7 @@ public class NotificationAspectConfig {
     private String linkNews;
     private String titleDoc;
     private String linkDoc;
+    private String uidRegex;
 
     @Bean
     public HttpNotificationClient notificationClientModeration() {

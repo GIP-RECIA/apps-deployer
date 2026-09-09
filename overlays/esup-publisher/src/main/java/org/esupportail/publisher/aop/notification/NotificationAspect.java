@@ -57,7 +57,7 @@ public class NotificationAspect {
         Iterable<Subscriber> targets = subscriberRepository.findAll(org.esupportail.publisher.repository.predicates.SubscriberPredicates.onCtx(item.getContextKey()));
         for (Subscriber target : targets) {
             final String targetId = target.getSubjectCtxId().getSubject().getKeyValue();
-            final String uidRegex = "^F[a-zA-Z0-9]{7}$";
+            final String uidRegex = notificationAspectConfig.getUidRegex();
             if (targetId.matches(uidRegex)) {
                 log.info("New notification to send to user {}", targetId);
                 httpNotificationClient.sendNotification(title, message, link, targetId, channels, Priority.NORMAL, TargetType.UID);
@@ -71,7 +71,7 @@ public class NotificationAspect {
     private void sendNotificationsDirect(ContentDTO content, AbstractItem item, HttpNotificationClient httpNotificationClient, String title, String link) throws Exception {
         for (var target : content.getTargets()) {
             final String message = content.getItem().getSummary();
-            final String uidRegex = "^F[a-zA-Z0-9]{7}$";
+            final String uidRegex = notificationAspectConfig.getUidRegex();
             final String targetId = target.getSubject().getModelId().getKeyId();
             if (targetId.matches(uidRegex)) {
                 log.info("New notification to send to user {}", targetId);
