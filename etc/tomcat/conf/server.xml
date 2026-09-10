@@ -196,6 +196,9 @@
           <Context path="/sympa-api" docBase="${server.webapps}/sympa-api" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/sympa-api/"/>
           </Context>
+          <Context path="/sacoche-ws" docBase="${server.webapps}/sacoche-ws" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/sacoche-ws/"/>
+          </Context>
 <!--          <Context path="/restriction-rentree-api" docBase="${server.webapps}/restriction-rentree-api" reloadable="false" crossContext="true">-->
 <!--              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/restriction-rentree-api/"/>-->
 <!--          </Context>-->
