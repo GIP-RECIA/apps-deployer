@@ -1,0 +1,9 @@
+dependencies {
+    overlay "fr.recia.sacoche.ws:sacoche-ws:${sacocheWSVersion}@war"
+}
+
+war {
+    archiveFileName = 'sacoche-ws.war'
+
+    classpath = classpath.files
+}
