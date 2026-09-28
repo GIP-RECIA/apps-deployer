@@ -21,10 +21,7 @@
         <appender-ref ref="FILE"/>
     </root>
 
-    <logger name="org.springframework.web" level="WARN"/>
-    <logger name="org.springframework.security" level="WARN"/>
-    <logger name="org.springframework.security.web" level="WARN"/>
-    <logger name="fr.recia.pronote.pronoteapii" level="INFO"/>
+    <logger name="fr.recia" level="INFO"/>
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
