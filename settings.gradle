@@ -16,7 +16,7 @@ include "overlays:pronote-ws"
 //include 'overlays:wisemapping'
 //include 'overlays:collabsoft'
 //include 'overlays:paramuseretab'
-//include 'overlays:si-ent-api'
+include 'overlays:si-ent-api'
 include 'overlays:mediacentre-api'
 include 'overlays:ressources-diffusables'
 include 'overlays:service-info-api'
