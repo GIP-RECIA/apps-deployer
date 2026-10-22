@@ -3,6 +3,6 @@ dependencies {
 }
 
 war {
-    archiveName = 'menu-cantine.war'
+    archiveFileName = 'menu-cantine.war'
     classpath = classpath.files
 }
