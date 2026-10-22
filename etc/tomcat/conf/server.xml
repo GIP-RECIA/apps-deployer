@@ -184,6 +184,9 @@
           <Context path="/ressources-diffusables" docBase="${server.webapps}/ressources-diffusables" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/ressources-diffusables/"/>
           </Context>
+          <Context path="/menu-cantine" docBase="${server.webapps}/menu-cantine" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/menu-cantine/"/>
+          </Context>
           <Context path="/esidoc-api" docBase="${server.webapps}/esidoc-api" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esidoc-api/"/>
           </Context>
