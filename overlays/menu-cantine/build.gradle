@@ -1,5 +1,5 @@
 dependencies {
-    runtime "fr.recia:menu-cantine:${menuCantineVersion}@war"
+    overlay "fr.recia:menu-cantine:${menuCantineVersion}@war"
 }
 
 war {
