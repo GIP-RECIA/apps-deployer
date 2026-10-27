@@ -10,6 +10,7 @@ CATALINA_PID=/opt/${USER}/tomcat/tomcat.pid
 
 CATALINA_OPTS="$CATALINA_OPTS -server -XX:+UseG1GC -XX:+PrintFlagsFinal"
 CATALINA_OPTS="$CATALINA_OPTS -Xms2G -Xmx6G"
+CATALINA_OPTS="$CATALINA_OPTS -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=1G"
 CATALINA_OPTS="$CATALINA_OPTS -Djava.net.preferIPv4Stack=true -Dnetworkaddress.cache.ttl=3600"
 CATALINA_OPTS="$CATALINA_OPTS -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dhttps.protocols=TLSv1.2,TLSv1.3"
 CATALINA_OPTS="$CATALINA_OPTS -Dhttp.agent=Java-Publisher"
