@@ -1,8 +1,8 @@
 dependencies {
-    runtime "fr.recia.manager:etab-manager:${etabManagerVersion}@war"
+    overlay "fr.recia.manager:etab-manager:${etabManagerVersion}@war"
 }
 
 war {
-    archiveName = "etab-manager.war"
+    archiveFileName = "etab-manager.war"
     classpath = classpath.files
 }
