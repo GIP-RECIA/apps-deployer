@@ -7,26 +7,24 @@
  * in the user manual at https://docs.gradle.org/6.4/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'gradle-war-deployer'
+rootProject.name = "gradle-war-deployer"
 
-include 'overlays:psi-probe'
-
+//include "overlays:collabsoft"
+include "overlays:esidoc-api"
+include "overlays:esidoc-ws"
+//include "overlays:esup-filemanager"
 //include "overlays:esup-publisher"
+include "overlays:etab-manager"
+include "overlays:mail-api"
+include "overlays:mediacentre-api"
+//include "overlays:paramuseretab"
+include "overlays:pronote-api"
 include "overlays:pronote-ws"
-//include 'overlays:wisemapping'
-//include 'overlays:collabsoft'
-//include 'overlays:paramuseretab'
-include 'overlays:si-ent-api'
-include 'overlays:mediacentre-api'
-include 'overlays:ressources-diffusables'
-include 'overlays:service-info-api'
-include 'overlays:esidoc-api'
-include 'overlays:esidoc-ws'
-include 'overlays:sacoche-ws'
-include 'overlays:mail-api'
-include 'overlays:sympa-api'
-include 'overlays:etab-manager'
-include 'overlays:restriction-rentree-api'
-//include 'overlays:esup-filemanager'
-include 'overlays:pronote-api'
-include 'overlays:menu-cantine'
+include "overlays:psi-probe"
+include "overlays:ressources-diffusables"
+include "overlays:restriction-rentree-api"
+include "overlays:sacoche-ws"
+include "overlays:service-info-api"
+include "overlays:si-ent-api"
+include "overlays:sympa-api"
+//include "overlays:wisemapping"
