@@ -1,8 +1,0 @@
-dependencies {
-    runtime "fr.recia:restriction-rentree-api:${restrictionRentreeVersion}@war"
-}
-
-war {
-    archiveName = 'restriction-rentree-api.war'
-    classpath = classpath.files
-}

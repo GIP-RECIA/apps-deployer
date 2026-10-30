@@ -1,8 +1,0 @@
-dependencies {
-    runtime "fr.recia:ressources-diffusables-api:${ressourcesDiffusablesVersion}@war"
-}
-
-war {
-    archiveName = "ressources-diffusables.war"
-    classpath = classpath.files
-}

@@ -15,7 +15,4 @@ include "overlays:esup-publisher"
 include 'overlays:wisemapping'
 include 'overlays:collabsoft'
 include 'overlays:paramuseretab'
-include 'overlays:si-ent-api'
-include 'overlays:ressources-diffusables'
 include 'overlays:etab-manager'
-include 'overlays:restriction-rentree-api'

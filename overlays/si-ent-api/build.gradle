@@ -1,9 +1,0 @@
-dependencies {
-    runtime "fr.recia.api:esco-si-ent-api:${siENTAPIVersion}@war"
-}
-
-war {
-    archiveName = 'si-ent-api.war'
-
-    classpath = classpath.files
-}
