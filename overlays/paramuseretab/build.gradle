@@ -1,8 +1,8 @@
 dependencies {
-    runtime "fr.recia.paramuseretab.api:esco-paramuseretab-api:${escoParamuseretabVersion}@war"
+    overlay "fr.recia.paramuseretab.api:esco-paramuseretab-api:${escoParamuseretabVersion}@war"
 }
 
 war {
-    archiveName = "paramuseretab.war"
+    archiveFileName = "paramuseretab.war"
     classpath = classpath.files
 }
