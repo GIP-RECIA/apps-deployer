@@ -165,9 +165,9 @@
           <Context path="/pronote-ws" docBase="${server.webapps}/pronote-ws" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/pronote-ws/"/>
           </Context>
-          <Context path="/si-ent-api" docBase="${server.webapps}/si-ent-api" reloadable="false" crossContext="true">-->
-              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/si-ent-api/"/>-->
-          </Context>-->
+          <Context path="/si-ent-api" docBase="${server.webapps}/si-ent-api" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/si-ent-api/"/>
+          </Context>
           <Context path="/service-info-api" docBase="${server.webapps}/service-info-api" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/service-info-api/"/>
           </Context>
@@ -202,11 +202,11 @@
           <Context path="/sacoche-ws" docBase="${server.webapps}/sacoche-ws" reloadable="false" crossContext="true">
               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/sacoche-ws/"/>
           </Context>
-<!--          <Context path="/restriction-rentree-api" docBase="${server.webapps}/restriction-rentree-api" reloadable="false" crossContext="true">-->
-<!--              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/restriction-rentree-api/"/>-->
-<!--          </Context>-->
-          <Context path="/etab-manager" docBase="${server.webapps}/etab-manager" reloadable="false" crossContext="true">-->
-               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/etab-manager/"/>-->
+          <Context path="/restriction-rentree-api" docBase="${server.webapps}/restriction-rentree-api" reloadable="false" crossContext="true">
+              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/restriction-rentree-api/"/>
+          </Context>
+          <Context path="/etab-manager" docBase="${server.webapps}/etab-manager" reloadable="false" crossContext="true">
+               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/etab-manager/"/>
           </Context>
 <!--          <Context path="/esup-filemanager" docBase="${server.webapps}/esup-filemanager" reloadable="false" crossContext="true">-->
 <!--              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esup-filemanager/"/>-->
