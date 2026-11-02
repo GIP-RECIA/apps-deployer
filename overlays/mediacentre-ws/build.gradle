@@ -1,0 +1,8 @@
+dependencies {
+    overlay "fr.recia.mediacentre.ws:esco-mediacentre-ws:${mediacentreWSVersion}@war"
+}
+
+war {
+    archiveFileName = "mediacentre-ws.war"
+    classpath = classpath.files
+}
