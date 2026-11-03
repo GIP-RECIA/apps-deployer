@@ -4,6 +4,5 @@ dependencies {
 
 war {
     archiveName = "esup-publisher.war"
-
     classpath = classpath.files
 }

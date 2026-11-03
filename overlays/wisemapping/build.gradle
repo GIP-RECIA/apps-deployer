@@ -1,9 +1,8 @@
 dependencies {
-    runtime "org.wisemapping:wise-webapp:${wisemappingVersion}@war"
+    overlay "org.wisemapping:wise-webapp:${wisemappingVersion}@war"
 }
 
 war {
-    archiveName = "wisemapping.war"
-
+    archiveFileName = "wisemapping.war"
     classpath = classpath.files
 }

@@ -26,6 +26,6 @@ dependencies {
 }
 
 war {
-    archiveFileName="esup-filemanager.war"
+    archiveFileName = "esup-filemanager.war"
     classpath = classpath.files
 }

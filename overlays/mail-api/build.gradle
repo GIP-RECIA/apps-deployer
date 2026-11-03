@@ -3,6 +3,6 @@ dependencies {
 }
 
 war {
-    archiveFileName="mail-api.war"
+    archiveFileName = "mail-api.war"
     classpath = classpath.files
 }

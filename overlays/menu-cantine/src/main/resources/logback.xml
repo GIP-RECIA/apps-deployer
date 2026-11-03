@@ -30,12 +30,12 @@
         </encoder>
     </appender>
 
-    <logger name="fr.recia" level="WARN"/>
-    <logger name="org" level="WARN"/>
-
-    <root level="INFO">
+    <root level="${logback.loglevel:-INFO}">
         <appender-ref ref="FILE"/>
     </root>
+
+    <logger name="fr.recia" level="WARN"/>
+    <logger name="org" level="WARN"/>
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>

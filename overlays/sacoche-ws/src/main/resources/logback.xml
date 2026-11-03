@@ -17,7 +17,7 @@
         </encoder>
     </appender>
 
-    <root level="INFO">
+    <root level="${logback.loglevel:-INFO}">
         <appender-ref ref="FILE"/>
     </root>
 

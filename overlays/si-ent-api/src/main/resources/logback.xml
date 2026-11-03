@@ -30,16 +30,16 @@
         </encoder>
     </appender>
 
+    <root level="${logback.loglevel:-INFO}">
+        <appender-ref ref="FILE"/>
+    </root>
+
     <logger name="fr.recia" level="WARN"/>
     <logger name="org" level="WARN"/>
 
     <logger name="fr.recia.si.ent.api.security.AuthenticationService" level="INFO" additivity="false">
         <appender-ref ref="AUTH" />
     </logger>
-
-    <root level="INFO">
-        <appender-ref ref="FILE"/>
-    </root>
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>

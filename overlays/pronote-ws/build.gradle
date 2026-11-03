@@ -3,7 +3,6 @@ dependencies {
 }
 
 war {
-    archiveFileName = 'pronote-ws.war'
-
+    archiveFileName = "pronote-ws.war"
     classpath = classpath.files
 }

@@ -3,6 +3,6 @@ dependencies {
 }
 
 war {
-    archiveFileName = 'restriction-rentree-api.war'
+    archiveFileName = "restriction-rentree-api.war"
     classpath = classpath.files
 }

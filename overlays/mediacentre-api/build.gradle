@@ -3,6 +3,6 @@ dependencies {
 }
 
 war {
-    archiveFileName="mediacentre-api.war"
+    archiveFileName = "mediacentre-api.war"
     classpath = classpath.files
 }

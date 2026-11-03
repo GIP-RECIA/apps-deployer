@@ -3,6 +3,6 @@ dependencies {
 }
 
 war {
-    archiveFileName = 'service-info-api.war'
+    archiveFileName = "service-info-api.war"
     classpath = classpath.files
 }

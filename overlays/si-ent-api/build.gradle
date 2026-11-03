@@ -3,6 +3,6 @@ dependencies {
 }
 
 war {
-    archiveFileName = 'si-ent-api.war'
+    archiveFileName = "si-ent-api.war"
     classpath = classpath.files
 }

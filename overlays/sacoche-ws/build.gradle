@@ -3,7 +3,6 @@ dependencies {
 }
 
 war {
-    archiveFileName = 'sacoche-ws.war'
-
+    archiveFileName = "sacoche-ws.war"
     classpath = classpath.files
 }
