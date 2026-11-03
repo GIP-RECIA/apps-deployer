@@ -1,5 +1,5 @@
 dependencies {
-    overlay "fr.recia:restriction-rentree-api:${restrictionRentreeVersion}@war"
+    overlay "fr.recia:restriction-rentree-api:${restrictionRentreeAPIVersion}@war"
 }
 
 war {

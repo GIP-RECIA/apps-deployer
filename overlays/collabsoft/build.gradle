@@ -1,5 +1,5 @@
 dependencies {
-    overlay "fr.recia.collabsoft:esco-collabsoft:${escoCollabsoftVersion}@war"
+    overlay "fr.recia.collabsoft:esco-collabsoft:${collabsoftVersion}@war"
 }
 
 war {

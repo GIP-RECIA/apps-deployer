@@ -1,5 +1,5 @@
 dependencies {
-    overlay "fr.recia.pronote:pronote-api:${pronoteApiVersion}@war"
+    overlay "fr.recia.pronote:pronote-api:${pronoteAPIVersion}@war"
 }
 
 war {

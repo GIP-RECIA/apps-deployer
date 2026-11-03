@@ -1,5 +1,5 @@
 dependencies {
-    overlay "fr.recia.mediacentre.api:esco-mediacentre:${escoMediacentreVersion}@war"
+    overlay "fr.recia.mediacentre.api:esco-mediacentre:${mediacentreAPIVersion}@war"
 }
 
 war {

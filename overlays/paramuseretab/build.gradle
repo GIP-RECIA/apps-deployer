@@ -1,5 +1,5 @@
 dependencies {
-    overlay "fr.recia.paramuseretab.api:esco-paramuseretab-api:${escoParamuseretabVersion}@war"
+    overlay "fr.recia.paramuseretab.api:esco-paramuseretab-api:${paramuseretabVersion}@war"
 }
 
 war {
