@@ -21,8 +21,6 @@
         <appender-ref ref="FILE"/>
     </root>
 
-    <logger name="org.springframework.web" level="WARN"/>
-    <logger name="org.springframework.security" level="WARN"/>
     <logger name="org.esupportail" level="DEBUG"/>
     <logger name="org.esupportail.filemanager.services.FsAccess" level="INFO"/>
 
