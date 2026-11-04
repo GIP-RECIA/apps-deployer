@@ -1,0 +1,8 @@
+dependencies {
+    overlay "fr.recia.manager:account-manager:${accountManagerVersion}@war"
+}
+
+war {
+    archiveFileName = "account-manager.war"
+    classpath = classpath.files
+}

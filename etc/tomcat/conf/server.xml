@@ -211,6 +211,9 @@
           <Context path="/etab-manager" docBase="${server.webapps}/etab-manager" reloadable="false" crossContext="true">
                <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/etab-manager/"/>
           </Context>
+          <Context path="/account-manager" docBase="${server.webapps}/account-manager" reloadable="false" crossContext="true">
+               <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/account-manager/"/>
+          </Context>
 <!--          <Context path="/esup-filemanager" docBase="${server.webapps}/esup-filemanager" reloadable="false" crossContext="true">-->
 <!--              <Parameter name="spring.config.additional-location" value="${PROJECT_HOME}/esup-filemanager/"/>-->
 <!--          </Context>-->

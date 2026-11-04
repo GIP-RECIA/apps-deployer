@@ -9,6 +9,7 @@
 
 rootProject.name = "gradle-war-deployer"
 
+include "overlays:account-manager"
 //include "overlays:collabsoft"
 include "overlays:esidoc-api"
 include "overlays:esidoc-ws"
