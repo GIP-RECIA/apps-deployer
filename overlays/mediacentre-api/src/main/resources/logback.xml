@@ -21,7 +21,7 @@
         <appender-ref ref="FILE"/>
     </root>
 
-    <logger name="fr.recia.mediacentre.api" level="INFO"/>
+    <logger name="fr.recia.mediacentre.api" level="WARN"/>
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
