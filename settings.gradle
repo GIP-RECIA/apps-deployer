@@ -14,5 +14,3 @@ include 'overlays:psi-probe'
 include "overlays:esup-publisher"
 include 'overlays:wisemapping'
 include 'overlays:collabsoft'
-include 'overlays:paramuseretab'
-include 'overlays:etab-manager'
